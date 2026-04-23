@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<error-handler name="global-error-handler">
+
+    <on-error-propagate type="ANY" logException="true">
+        <flow-ref name="prepare-error-response-subflow" doc:name="prepare-error-response-subflow"/>
+    </on-error-propagate>
+</error-handler>
+	<sub-flow name="prepare-error-response-subflow">
+    
+    <ee:transform doc:name="Map Error &amp; Status">
+        <ee:message>
+				<ee:set-payload resource="dwl/error-response.dwl" />
+        
+</ee:message>
+        <ee:variables>
+            <ee:set-variable variableName="httpStatus"><![CDATA[%dw 2.0
+output application/java
+---
+if (error.errorType.identifier == "CONNECTIVITY") 504
+else if (error.errorType.identifier == "UNAUTHORIZED") 401
+else if (error.errorType.identifier == "BAD_REQUEST") 400
+else if (error.errorType.identifier == "NOT_FOUND") 404
+else 500]]></ee:set-variable>
+        </ee:variables>
+    </ee:transform>
+		<set-variable value="#[output json --- payload.error.code default 500]" doc:name="httpStatus" doc:id="9d5d493e-0bf7-4467-acc4-c12c5e380b04" variableName="httpStatus" />
+		<logger level="ERROR" doc:name="Logger ERROR" message='#[%dw 2.0&#10;output application/json&#10;---&#10;payload]' />
+
+</sub-flow>
+</mule>

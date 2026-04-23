@@ -1,0 +1,37 @@
+{
+  "configs": [
+    "common/global-error-handler.xml",
+    "global.xml",
+    "common/logger.xml"
+  ],
+  "secureProperties": [],
+  "supportedJavaVersions": [],
+  "redeploymentEnabled": true,
+  "name": "365d8e9a-5b53-4d65-8776-8d29047c4ac6:common-framework:1.0.4",
+  "minMuleVersion": "4.8.0",
+  "requiredProduct": "MULE_EE",
+  "classLoaderModelLoaderDescriptor": {
+    "id": "mule",
+    "attributes": {
+      "exportedPackages": [],
+      "exportedResources": [
+        "application-types.xml",
+        "common/global-error-handler.xml",
+        "common/logger.xml",
+        "config.yaml",
+        "dwl/error-response.dwl",
+        "dwl/log.dwl",
+        "errorCodeToTypeMapping.json",
+        "global.xml",
+        "log4j2.xml"
+      ]
+    }
+  },
+  "bundleDescriptorLoader": {
+    "id": "mule",
+    "attributes": {}
+  },
+  "javaSpecificationVersions": [
+    "17"
+  ]
+}

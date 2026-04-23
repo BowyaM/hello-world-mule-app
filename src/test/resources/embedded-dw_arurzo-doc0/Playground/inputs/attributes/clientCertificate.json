@@ -1,0 +1,75 @@
+{
+  "basicConstraints": 20,
+  "criticalExtensionOIDs": [
+    "sed",
+    "a",
+    "risus"
+  ],
+  "extendedKeyUsage": [
+    "semper",
+    "molestie"
+  ],
+  "extensions": [
+    {
+      "criticality": true,
+      "oid": "Pellentesque"
+    }
+  ],
+  "issuerAlternativeNames": [
+    {
+      "name": "Craig",
+      "type": 21
+    }
+  ],
+  "issuerDN": {
+    "commonName": "ipsum",
+    "name": "Abby"
+  },
+  "issuerUniqueID": [
+    false,
+    true
+  ],
+  "issuerX500Principal": {
+    "name": "Amiee"
+  },
+  "keyUsage": [
+    true,
+    true,
+    false
+  ],
+  "name": "Carson",
+  "nonCriticalExtensionOIDs": [
+    "eget",
+    "consectetur",
+    "adipiscing"
+  ],
+  "notAfter": "2021-05-16",
+  "notBefore": "2022-01-01",
+  "publicKey": {
+    "algorithm": "sodales",
+    "modulus": 46,
+    "params": 39,
+    "publicKey": "sed"
+  },
+  "serialNumber": 46,
+  "serialNumberObject": {
+    "serialNumber": 49
+  },
+  "sigAlgName": "risus",
+  "sigAlgOID": "Lorem",
+  "subjectAlternativeNames": [
+    {
+      "name": "Aaron",
+      "type": 90
+    }
+  ],
+  "subjectDN": {
+    "commonName": "convallis",
+    "name": "Alison"
+  },
+  "subjectX500Principal": {
+    "name": "Carter"
+  },
+  "type": "sed",
+  "version": 72
+}

@@ -1,0 +1,24 @@
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd  http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd  http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+    <http:listener-config name="Listener-config" basePath="/api">
+        <http:listener-connection port="8079" host="0.0.0.0"></http:listener-connection>
+    </http:listener-config>
+    <flow name="name1">
+        <http:listener doc:id="eepldg" doc:name="Listener" path="/helloWorld" config-ref="Listener-config"></http:listener>
+        <flow-ref doc:name="init-subflow" doc:id="init-flow-ref" name="init-subflow"/>
+        <set-variable value="Hello World flow processing started" doc:name="Set Message Variable" doc:id="set-message-var" variableName="message"/>
+        <flow-ref doc:name="info-subflow" doc:id="info-flow-ref" name="info-subflow"/>
+        <ee:transform doc:id="vbkbbm" doc:name="Transform">
+            <ee:message>
+                <ee:set-payload doc:id="arurzo" doc:name="Set payload"><![CDATA[%dw 2.0
+        output application/jsonn
+        ---
+        {
+          "message":"Hello World flow started",
+          "timestamp": now(),
+          "correlationId": correlationId
+        }]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+        <flow-ref doc:name="exit-subflow" doc:id="exit-flow-ref" name="exit-subflow"/>
+    </flow>
+</mule>

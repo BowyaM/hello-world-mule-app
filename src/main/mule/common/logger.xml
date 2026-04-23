@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<sub-flow name="exit-subflow" doc:id="e9414361-4984-4817-b330-d9f184341d5f" >
+		<set-variable value='#[output json&#10;import update from dw::util::Values&#10;---&#10;vars.initVar update "event" with "END"]' doc:name="exitVar" doc:id="2ead9afe-dd4f-41ca-9e94-5430d081340f" variableName="exitVar" />
+		<logger level="INFO" doc:name="Logger END" doc:id="e5413962-51a4-4e58-a3d7-df4af3b887a0" message='#[import dwl::log&#10;output application/json skipNullOn="everywhere"&#10;--- &#10;log::log(vars.exitVar)]' />
+	</sub-flow>
+	<sub-flow name="init-subflow" doc:id="db61e821-ac3b-4479-b69a-21f62a4c423f" >
+		<set-variable value='#[output json&#10;---&#10;{&#10;   path: attributes.requestPath,&#10;   method: attributes.method, &#10;   transactionId: correlationId,&#10;   appName: app.name,&#10;   event: "START"&#10;}]' doc:name="initVar" doc:id="1a6d9f81-5872-4979-bef9-6f45fde257c2" variableName="initVar"/>
+		<logger level="INFO" doc:name="Logger START" doc:id="474f9ea3-48e2-45b2-a422-92c44e4850a8" message='#[import dwl::log&#10;output application/json skipNullOn="everywhere"&#10;---&#10;log::log(vars.initVar)]' />
+	</sub-flow>
+	<sub-flow name="info-subflow" doc:id="6912ea7e-830d-4f99-81c0-58bd3d0a80ce" >
+		<logger level="INFO" doc:name="Logger INFO" doc:id="5fe0672a-5f16-4398-9c1d-eb7f5aec761c" message='#[import dwl::log&#10;output application/json skipNullOn="everywhere"&#10;---&#10;log::log(vars.initVar, vars.message)]' />
+	</sub-flow>
+	</mule>

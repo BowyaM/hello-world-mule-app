@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<error-handler name="global-error-handler">
+
+    <on-error-propagate type="ANY" logException="true">
+        <flow-ref name="prepare-error-response-subflow" doc:name="prepare-error-response-subflow"/>
+    </on-error-propagate>
+</error-handler>
+ <!-- <error-handler name="Global_HTTP_Error_Handler">
+ 
+        =================================================
+        APIKIT ERRORS                                        
+        =================================================
+        
+ 		<on-error-propagate type="APIKIT:BAD_REQUEST" logException="true">
+            <set-variable variableName="httpStatus" value="400" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="6c007670-47d9-40b9-8394-a158c3a4f255" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="APIKIT:NOT_FOUND" logException="true">
+            <set-variable variableName="httpStatus" value="404" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="03938c7d-5cad-42e9-a059-9b2e906e9513" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="APIKIT:METHOD_NOT_ALLOWED" logException="true">
+            <set-variable variableName="httpStatus" value="405" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="fad1c142-7100-4c4d-a920-40ba207b083b" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="APIKIT:NOT_ACCEPTABLE" logException="true">
+            <set-variable variableName="httpStatus" value="406" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="35816d73-35d8-4e2e-95b8-8059307306a7" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="APIKIT:UNSUPPORTED_MEDIA_TYPE" logException="true">
+            <set-variable variableName="httpStatus" value="415" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="1a8c69be-8090-4987-9cea-29e2c87e5325" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+
+        =================================================
+        DB ERRORS                                        
+        =================================================
+
+        <on-error-propagate type="DB:CONNECTIVITY" logException="true">
+            <set-variable variableName="httpStatus" value="503" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="3ed62ebf-6cdd-42a0-9d3c-0bdf16d863ca" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="DB:QUERY_EXECUTION" logException="true">
+            <set-variable variableName="httpStatus" value="500" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="24dfdfa7-2ca6-4660-88be-d82842eda1af" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="DB:BAD_SQL_SYNTAX" logException="true">
+            <set-variable variableName="httpStatus" value="500" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="02a24938-0693-425d-95a2-8da096bce26e" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="DB:RETRY_EXHAUSTED" logException="true">
+            <set-variable variableName="httpStatus" value="500" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="de47b7f0-dde1-4015-9f25-78836dfea25d" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        =========================
+        4XX HTTP CLIENT ERROR SERIES  
+        =========================
+
+        <on-error-propagate type="HTTP:BAD_REQUEST" logException="true">
+            <set-variable variableName="httpStatus" value="400" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="f0383802-53ff-407d-99e3-acee9719f64e" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="HTTP:UNAUTHORIZED" logException="true">
+            <set-variable variableName="httpStatus" value="401" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="95b78ea8-ae55-441f-a95f-b1d79ecbd942" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="HTTP:FORBIDDEN" logException="true">
+            <set-variable variableName="httpStatus" value="403" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="5d3aabb4-7fd1-4379-ab5a-565fc691a4e1" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="HTTP:NOT_FOUND" logException="true">
+            <set-variable variableName="httpStatus" value="404" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="98f40a02-c278-49d1-a419-64c3b1c473e2" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="HTTP:METHOD_NOT_ALLOWED" logException="true">
+            <set-variable variableName="httpStatus" value="405" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="da5e13da-b7c2-4b5e-94db-6dbab3b65538" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="HTTP:NOT_ACCEPTABLE" logException="true">
+            <set-variable variableName="httpStatus" value="406" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="2edbb998-245c-4f66-a5a8-4304fa3a39df" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="HTTP:PROXY_AUTHENTICATION_REQUIRED" logException="true">
+            <set-variable variableName="httpStatus" value="407" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="409493be-c573-4c53-8669-db57c64a2dce" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="HTTP:REQUEST_TIMEOUT" logException="true">
+            <set-variable variableName="httpStatus" value="408" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="5ea6af47-1537-4321-94db-552a140b557d" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="HTTP:CONFLICT" logException="true">
+            <set-variable variableName="httpStatus" value="409" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="6c0cd0a1-d460-4c00-b400-cd58f151318e" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="HTTP:GONE" logException="true">
+            <set-variable variableName="httpStatus" value="410" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="df9f7b09-e7fc-4bca-b110-0a892a0ff148" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="HTTP:LENGTH_REQUIRED" logException="true">
+            <set-variable variableName="httpStatus" value="411" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="02035b55-5f1a-41af-98a9-5ba0488cbf6e" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="HTTP:PRECONDITION_FAILED" logException="true">
+            <set-variable variableName="httpStatus" value="412" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="ae82298c-cd9a-4c91-b04d-6f8a692d43af" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="HTTP:PAYLOAD_TOO_LARGE" logException="true">
+            <set-variable variableName="httpStatus" value="413" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="8085a557-f56a-4b0e-8212-ab23132a8f69" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="HTTP:URI_TOO_LONG" logException="true">
+            <set-variable variableName="httpStatus" value="414" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="8383b180-cf8a-45c4-bd2c-d748922edd8c" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="HTTP:UNSUPPORTED_MEDIA_TYPE" logException="true">
+            <set-variable variableName="httpStatus" value="415" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="a6ac08d7-96a6-45e4-836b-66e82bd25b32" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="HTTP:TOO_MANY_REQUESTS" logException="true">
+            <set-variable variableName="httpStatus" value="429" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="b7281aae-7beb-4693-b513-3f47e7cd71c5" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+
+        =========================
+        5XX HTTP SERVER ERROR SERIES  
+        =========================
+
+        <on-error-propagate type="HTTP:INTERNAL_SERVER_ERROR" logException="true">
+            <set-variable variableName="httpStatus" value="500" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="9b9ee2cc-1ceb-4e95-923f-a24568fd2897" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="HTTP:NOT_IMPLEMENTED" logException="true">
+            <set-variable variableName="httpStatus" value="501" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="40029acb-5610-4246-abc0-ddff28bb15fb" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="HTTP:BAD_GATEWAY" logException="true">
+            <set-variable variableName="httpStatus" value="502" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="2e5abef4-352e-472c-9e49-667c605cc03b" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="HTTP:SERVICE_UNAVAILABLE" logException="true">
+            <set-variable variableName="httpStatus" value="503" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="b77976bb-5f3b-40d3-810a-83900bbd72eb" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+        <on-error-propagate type="HTTP:GATEWAY_TIMEOUT" logException="true">
+            <set-variable variableName="httpStatus" value="504" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="a4c36f52-3620-47ce-9ec6-f8387ecf90ab" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+        <on-error-propagate type="ANY" logException="true">
+            <set-variable variableName="httpStatus" value="500" doc:name="httpStatus"/>
+			<flow-ref doc:name="prepare-error-response-subflow" doc:id="1512e2b8-b197-4798-821f-ded65189b56f" name="prepare-error-response-subflow" />
+        
+</on-error-propagate>
+
+    </error-handler> -->
+	<sub-flow name="prepare-error-response-subflow">
+    
+    <ee:transform doc:name="Map Error &amp; Status">
+        <ee:message>
+				<ee:set-payload resource="dwl/error-response.dwl" />
+        
+</ee:message>
+        <ee:variables>
+            <ee:set-variable variableName="httpStatus"><![CDATA[%dw 2.0
+output application/java
+---
+if (error.errorType.identifier == "CONNECTIVITY") 504
+else if (error.errorType.identifier == "UNAUTHORIZED") 401
+else if (error.errorType.identifier == "BAD_REQUEST") 400
+else if (error.errorType.identifier == "NOT_FOUND") 404
+else 500]]></ee:set-variable>
+        </ee:variables>
+    </ee:transform>
+		<set-variable value="#[output json --- payload.error.code default 500]" doc:name="httpStatus" doc:id="9d5d493e-0bf7-4467-acc4-c12c5e380b04" variableName="httpStatus" />
+		<logger level="ERROR" doc:name="Logger ERROR" message='#[%dw 2.0&#10;output application/json&#10;---&#10;payload]' />
+
+</sub-flow>
+</mule>
